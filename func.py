@@ -95,6 +95,6 @@ def handler(ctx, data: io.BytesIO=None):
     print("Exiting Python Hello World handler", flush=True)
     return response.Response(
         ctx, response_data=json.dumps(
-            {"api_url": "Hello Good Morning {0}",api_url}),
+            {"api_url": api_url}),
         headers={"Content-Type": "application/json"}
         )
