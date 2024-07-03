@@ -50,9 +50,7 @@ def generate_api(template, question, retrieved_text):
         return generated.prompt[0:115]  # Assuming you want the first 115 characters
 
 def handler(ctx, data: io.BytesIO=None):
-    print("Entering Python handler", flush=True)
-    try:
-        print("Entering Python Hello World handler", flush=True)
+    print("Entering Python Hello World handler", flush=True)
     name = "World"
     try:
         body = json.loads(data.getvalue())
