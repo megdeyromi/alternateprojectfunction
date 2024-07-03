@@ -52,48 +52,17 @@ def generate_api(template, question, retrieved_text):
 def handler(ctx, data: io.BytesIO=None):
     print("Entering Python handler", flush=True)
     try:
-        # Load input data
+        print("Entering Python Hello World handler", flush=True)
+    name = "World"
+    try:
         body = json.loads(data.getvalue())
-        file_path = "hcm_api_doc.txt"
-        query = "Which API can I use to get the enrollments data"
-
-        # Load documents from file
-        extracted_text = load_documents(file_path)
-
-        # Embed the extracted text
-        documents = [{"content": extracted_text, "id": "txt_1"}]
-        document_texts = [doc['content'] for doc in documents]
-        document_embeddings = embed_texts(document_texts)
-
-        # Retrieve relevant documents based on query
-        retrieved_docs = retrieve_relevant_documents(query, document_texts, document_embeddings)
-        retrieved_text = "\n".join(retrieved_docs)
-
-        # Generate API URL using retrieved documents and query
-        template = '''
-        API url:  https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate
-
-        API url: https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate&onlyData=True
-
-        You are given the below API Documentation:
-        {api_docs}
-        Using this documentation, generate the full API url to call for answering the user question.
-        You should build the API url in order to get a response that is as short as possible, while still getting the necessary information to answer the question.
-        Pay attention to deliberately exclude any unnecessary pieces of data in the API call.
-        Do not include data not in the documentation.
-
-        Question:{question}
-        API url:
-        '''
-
-        api_url = generate_api(template, query, retrieved_text)
-
-        # Return response
-        return response.Response(
-            ctx, response_data=json.dumps({"api_url": api_url}),
-            headers={"Content-Type": "application/json"}
-        )
-
-    except Exception as ex:
+        name = body.get("name")
+    except (Exception, ValueError) as ex:
         print(str(ex), flush=True)
-        return response.Response(ctx, response_data=json.dumps({"error": str(ex)}), status_code=500)
+
+    print("Vale of name = ", name, flush=True)
+    print("Exiting Python Hello World handler", flush=True)
+    return response.Response(
+        ctx, response_data=json.dumps(
+            {"message": "Hello Good Morning {0}".format(name)}),
+        headers={"Content-Type": "application/json"}
