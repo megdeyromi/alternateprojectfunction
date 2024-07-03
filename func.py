@@ -55,6 +55,39 @@ def handler(ctx, data: io.BytesIO=None):
     try:
         body = json.loads(data.getvalue())
         name = body.get("name")
+        file_path = "hcm_api_doc.txt"
+        query = "Which API can I use to get the enrollments data"
+
+        # Load documents from file
+        extracted_text = load_documents(file_path)
+
+        # Embed the extracted text
+        documents = [{"content": extracted_text, "id": "txt_1"}]
+        document_texts = [doc['content'] for doc in documents]
+        document_embeddings = embed_texts(document_texts)
+
+        # Retrieve relevant documents based on query
+        retrieved_docs = retrieve_relevant_documents(query, document_texts, document_embeddings)
+        retrieved_text = "\n".join(retrieved_docs)
+
+        # Generate API URL using retrieved documents and query
+        template = '''
+        API url:  https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate
+
+        API url: https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate&onlyData=True
+
+        You are given the below API Documentation:
+        {api_docs}
+        Using this documentation, generate the full API url to call for answering the user question.
+        You should build the API url in order to get a response that is as short as possible, while still getting the necessary information to answer the question.
+        Pay attention to deliberately exclude any unnecessary pieces of data in the API call.
+        Do not include data not in the documentation.
+
+        Question:{question}
+        API url:
+        '''
+
+        api_url = generate_api(template, query, retrieved_text)
     except (Exception, ValueError) as ex:
         print(str(ex), flush=True)
 
