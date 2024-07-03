@@ -64,3 +64,4 @@ def handler(ctx, data: io.BytesIO=None):
         ctx, response_data=json.dumps(
             {"message": "Hello Good Morning {0}".format(name)}),
         headers={"Content-Type": "application/json"}
+        )
