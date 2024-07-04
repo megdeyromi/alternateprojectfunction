@@ -7,7 +7,7 @@ import numpy as np
 import time
 from fdk import response
 
-from langchain_community.embeddings import CohereEmbeddings
+#from langchain_community.embeddings import CohereEmbeddings
 # Load Documents
 def load_documents(file_path):
     with open(file_path, "r") as f:
@@ -17,7 +17,7 @@ def load_documents(file_path):
 # Initialize Cohere client
 cohere_api_key = "TX8xfSGQm7btpYjQBrf3qYHyo7M9gAXtGrp2kJtT"
 co = cohere.Client(cohere_api_key)
-
+api_url = "https"
 # Function to embed texts
 def embed_texts(texts):
     response = co.embed(
@@ -96,6 +96,6 @@ def handler(ctx, data: io.BytesIO=None):
     print("Exiting Python Hello World handler", flush=True)
     return response.Response(
         ctx, response_data=json.dumps(
-            {"api_url": name}),
+            {"api_url": cohere_api_key}),
         headers={"Content-Type": "application/json"}
         )
