@@ -7,6 +7,7 @@ import numpy as np
 import time
 from fdk import response
 
+from langchain_community.embeddings import CohereEmbeddings
 # Load Documents
 def load_documents(file_path):
     with open(file_path, "r") as f:
