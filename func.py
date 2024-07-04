@@ -89,6 +89,7 @@ def handler(ctx, data: io.BytesIO=None):
         '''
 
         api_url = generate_api(template, query, retrieved_text)
+        print("Vale of api_url = ", api_url, flush=True)
     except (Exception, ValueError) as ex:
         print(str(ex), flush=True)
 
