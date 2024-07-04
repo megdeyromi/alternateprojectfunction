@@ -87,7 +87,7 @@ def handler(ctx, data: io.BytesIO=None):
         API url:
         '''
 
-        api_url = generate_api(template, query, retrieved_text)
+        #api_url = generate_api(template, query, retrieved_text)
     except (Exception, ValueError) as ex:
         print(str(ex), flush=True)
 
@@ -95,6 +95,6 @@ def handler(ctx, data: io.BytesIO=None):
     print("Exiting Python Hello World handler", flush=True)
     return response.Response(
         ctx, response_data=json.dumps(
-            {"api_url": api_url}),
+            {"api_url": name}),
         headers={"Content-Type": "application/json"}
         )
