@@ -97,6 +97,6 @@ def handler(ctx, data: io.BytesIO=None):
     print("Exiting Python Hello World handler", flush=True)
     return response.Response(
         ctx, response_data=json.dumps(
-            {"api_url": cohere_api_key}),
+            {"api_url": api_url}),
         headers={"Content-Type": "application/json"}
         )
