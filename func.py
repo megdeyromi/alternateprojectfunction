@@ -48,7 +48,8 @@ def generate_api(template, question, retrieved_text):
         )
         generated = response
         time.sleep(10)
-        return generated.prompt[25:115]  # Assuming you want the first 115 characters
+        generated = response.generations[0].text.strip()
+        return generated  # Assuming you want the first 115 characters
 
 def handler(ctx, data: io.BytesIO=None):
     print("Entering Python Hello World handler", flush=True)
