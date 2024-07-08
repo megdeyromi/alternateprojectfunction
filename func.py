@@ -53,12 +53,12 @@ def generate_api(template, question, retrieved_text):
 
 def handler(ctx, data: io.BytesIO=None):
     print("Entering Python Hello World handler", flush=True)
-    name = "World"
+    query = "World"
     try:
         body = json.loads(data.getvalue())
-        name = body.get("name")
+        
         file_path = "hcm_api_doc.txt"
-        query = "Which API can I use to get the enrollments data"
+        query = body.get("query", "Which API can I use to get the enrollments data")
 
         # Load documents from file
         extracted_text = load_documents(file_path)
@@ -74,10 +74,7 @@ def handler(ctx, data: io.BytesIO=None):
 
         # Generate API URL using retrieved documents and query
         template = '''
-        API url:  https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate
-
-        API url: https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate&onlyData=True
-
+        
         You are given the below API Documentation:
         {api_docs}
         Using this documentation, generate the full API url to call for answering the user question.
@@ -97,7 +94,7 @@ def handler(ctx, data: io.BytesIO=None):
     except (Exception, ValueError) as ex:
         print(str(ex), flush=True)
 
-    print("Vale of name = ", name, flush=True)
+
     print("Exiting Python Hello World handler", flush=True)
     return response.Response(
         ctx, response_data=json.dumps(
