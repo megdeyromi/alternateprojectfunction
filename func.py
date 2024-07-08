@@ -48,14 +48,14 @@ def generate_api(template, question, retrieved_text):
         )
         generated = response
         time.sleep(10)
-        return generated.prompt[19:120]  # Assuming you want the first 115 characters
+        return generated.prompt[25:115]  # Assuming you want the first 115 characters
 
 def handler(ctx, data: io.BytesIO=None):
     print("Entering Python Hello World handler", flush=True)
     name = "World"
     try:
         body = json.loads(data.getvalue())
-        
+        name = body.get("name")
         file_path = "hcm_api_doc.txt"
         query = "Which API can I use to get the enrollments data"
 
