@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import time
 from fdk import response
-
+from urllib.parse import urlparse, parse_qs
 #from langchain_community.embeddings import CohereEmbeddings
 # Load Documents
 def load_documents(file_path):
@@ -89,6 +89,9 @@ def handler(ctx, data: io.BytesIO=None):
         '''
 
         api_url = generate_api(template, query, retrieved_text)
+        parsed_url = urlparse(api_url)
+        query = parsed_url.query
+        print(query)
         print("Vale of api_url = ", api_url, flush=True)
     except (Exception, ValueError) as ex:
         print(str(ex), flush=True)
@@ -97,6 +100,6 @@ def handler(ctx, data: io.BytesIO=None):
     print("Exiting Python Hello World handler", flush=True)
     return response.Response(
         ctx, response_data=json.dumps(
-            {"api_url": api_url}),
+            {"api_url": query}),
         headers={"Content-Type": "application/json"}
         )
