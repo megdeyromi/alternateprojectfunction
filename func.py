@@ -58,7 +58,7 @@ def handler(ctx, data: io.BytesIO=None):
         body = json.loads(data.getvalue())
         
         file_path = "hcm_api_doc.txt"
-        query = body.get("query", "Which API can I use to get the enrollments data")
+        query = body.get("query", "Which API can I use to get the project information")
 
         # Load documents from file
         extracted_text = load_documents(file_path)
@@ -74,7 +74,6 @@ def handler(ctx, data: io.BytesIO=None):
 
         # Generate API URL using retrieved documents and query
         template = '''
-        API url:  https://example.com/hcmRestApi/resources/11.13.18.05/emps?q=FirstName=Derek;LastName=Kam&fields=HireDate
         You are given the below API Documentation:
         {api_docs}
         Using this documentation, generate the full API url to call for answering the user question.
